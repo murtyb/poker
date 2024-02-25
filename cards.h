@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 using std::string;
 
@@ -14,9 +15,12 @@ class Card
 public:
     Card(const string& card_symbol);
 
+    static void card_initialization();
+
     int get_value();
 
 private:
+    static std::map<string, int> face_card_values;
     static std::vector<string> face_cards;
     static std::vector<string> nonface_cards;
     string m_card_symbol;

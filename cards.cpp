@@ -3,6 +3,7 @@
 #include <vector>
 #include <stdexcept>
 #include "cards.h"
+#include <map>
 
 using std::string;
 
@@ -81,8 +82,16 @@ int Card::get_value()
     return m_card_value;
 }
 
+void Card::card_initialization()
+{
+    face_card_values = {{"J", 11}, {"Q", 12}, {"K", 13}, {"A", 14}};
+    nonface_cards = {"2", "3", "4", "5", "6", "7", "8", "9", "10"};
+    for(const auto& pair : face_card_values)
+    {
+        face_cards.push_back(pair.first);
+    }
+}
 
-std::vector<string> Card::face_cards = {"J", "Q", "K", "A"};
-std::vector<string> Card::nonface_cards = {"2", "3", "4", "5", "6", "7", "8", "9", "10"};
-
-
+std::vector<string> Card::face_cards;
+std::map<string, int> Card::face_card_values;
+std::vector<string> Card::nonface_cards;
