@@ -22,7 +22,7 @@ public:
 private:
     static std::map<string, int> face_card_values;
     static std::vector<string> face_cards;
-    static std::vector<string> nonface_cards;
+    static std::vector<string> s_non_face_cards;
     string m_card_symbol;
     int m_card_value;
 

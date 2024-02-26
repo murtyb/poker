@@ -34,7 +34,7 @@ Card::Card(const string& card_symbol)
     }
     else
     {
-        std::vector<string> all_cards = nonface_cards;
+        std::vector<string> all_cards = s_non_face_cards;
         all_cards.insert(all_cards.end(), face_cards.begin(), face_cards.end());
         invalid_symbol_error(card_symbol, all_cards);
     }
@@ -47,7 +47,7 @@ bool Card::is_valid_face_card(const string& card_symbol)
 
 bool Card::is_valid_nonface_card(const string& card_symbol)
 {
-    return is_element_of(card_symbol, nonface_cards);
+    return is_element_of(card_symbol, s_non_face_cards);
 }
 
 int Card::value_of_face_symbol(const string& card_symbol)
@@ -83,7 +83,7 @@ int Card::get_value()
 void Card::card_initialization()
 {
     face_card_values = {{"J", 11}, {"Q", 12}, {"K", 13}, {"A", 14}};
-    nonface_cards = {"2", "3", "4", "5", "6", "7", "8", "9", "10"};
+    s_non_face_cards = {"2", "3", "4", "5", "6", "7", "8", "9", "10"};
     for (const auto& pair : face_card_values)
     {
         face_cards.push_back(pair.first);
@@ -92,4 +92,4 @@ void Card::card_initialization()
 
 std::vector<string> Card::face_cards;
 std::map<string, int> Card::face_card_values;
-std::vector<string> Card::nonface_cards;
+std::vector<string> Card::s_non_face_cards;
