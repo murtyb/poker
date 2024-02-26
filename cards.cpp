@@ -52,13 +52,11 @@ bool Card::is_valid_nonface_card(const string& card_symbol)
 
 int Card::value_of_face_symbol(const string& card_symbol)
 {
-    int card_value = 10;
-    for (string symbol : face_cards)
+    for (const auto& [symbol, value] : face_card_values)
     {
-        card_value++;
         if (card_symbol == symbol)
         {
-            return card_value;
+            return value;
         }
     }
     invalid_symbol_error(card_symbol, face_cards);
@@ -86,7 +84,7 @@ void Card::card_initialization()
 {
     face_card_values = {{"J", 11}, {"Q", 12}, {"K", 13}, {"A", 14}};
     nonface_cards = {"2", "3", "4", "5", "6", "7", "8", "9", "10"};
-    for(const auto& pair : face_card_values)
+    for (const auto& pair : face_card_values)
     {
         face_cards.push_back(pair.first);
     }
