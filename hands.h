@@ -12,16 +12,18 @@ public:
 
     bool operator<=(const Hand& hand) const;
     bool get_is_pocket_pair() const;
-    bool get_high_card_value() const;
+    int get_high_card_value() const;
+    int get_low_card_value() const;
     Card get_card(int& x) const;
 
 private:
     Card m_card_1;
     Card m_card_2;
     int m_high_card_value;
+    int m_low_card_value;
     bool m_is_pocket_pair;
 
     bool hand_is_pocket_pair();
-    int highest_card_value();
+    void set_high_and_low_card_values();
 };
 
