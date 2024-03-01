@@ -19,7 +19,9 @@ int main()
         Deck deck(card_symbols);
         Hand hand1 = deck.deal_hand();
         Hand hand2 = deck.deal_hand();
-        std::cout << hand1 << hand2;
+        Hand hand3 = deck.deal_hand();
+
+        std::cout << hand1 << "   " << hand2;
     }
     catch(const std::runtime_error& e)
     {

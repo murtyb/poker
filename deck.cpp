@@ -51,6 +51,6 @@ void Deck::check_if_deck_empty() const
 {
    if (m_current_deck.empty())
    {
-        throw std::runtime_error("Error: Tried to deal card when deck was empty.");
+        throw std::runtime_error("Tried to deal card when deck was empty.");
    }
 }
