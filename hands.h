@@ -14,7 +14,8 @@ public:
     bool get_is_pocket_pair() const;
     int get_high_card_value() const;
     int get_low_card_value() const;
-    Card get_card(int& x) const;
+    Card get_card(const int& x) const;
+    friend std::ostream& operator<<(std::ostream& stream, const Hand& hand);
 
 private:
     Card m_card_1;
@@ -26,4 +27,3 @@ private:
     bool hand_is_pocket_pair();
     void set_high_and_low_card_values();
 };
-

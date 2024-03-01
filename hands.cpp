@@ -64,7 +64,7 @@ int Hand::get_low_card_value() const
     return m_low_card_value;        
 }
 
-Card  Hand::get_card(int& x) const
+Card  Hand::get_card(const int& x) const
 {
     if (x == 1)
     {
@@ -79,4 +79,9 @@ Card  Hand::get_card(int& x) const
     {
         throw std::runtime_error("Error when exectuting get_card. Was expecting the integers 1 or 2, however instead recieved: " + std::to_string(x));
     }     
+}
+
+std::ostream& operator<<(std::ostream& stream, const Hand& hand)
+{
+    return stream << hand.get_card(1) << hand.get_card(2);
 }

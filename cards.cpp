@@ -94,6 +94,11 @@ bool Card::operator<=(const Card& card) const
     return m_card_value <= card.get_value();
 }
 
+std::ostream& operator<<(std::ostream& stream, const Card& card)
+{
+    return stream << card.m_card_symbol;
+}
+
 std::vector<string> Card::s_face_cards;
 std::map<string, int> Card::s_face_card_values;
 std::vector<string> Card::s_non_face_cards;
