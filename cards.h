@@ -13,6 +13,7 @@ bool is_element_of(const string& x, const std::vector<string>& v);
 class Card
 {
 public:
+    Card() = default;
     Card(const string& card_symbol);
     friend std::ostream& operator<<(std::ostream& stream, const Card& card);
     static void card_initialization();

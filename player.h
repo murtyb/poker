@@ -6,9 +6,15 @@
 class Player
 {
     public:
-    Player(const int& starting_stack);
+    Hand hand;
+    int m_position; //0 position is button.
+    float m_ammount_bet;
+    static bool compare_player_positions(Player p1, Player p2); //returns true if p1 is positioned before p2.
+
+    Player(const float& starting_stack);
+    void bet(const float& ammount);
+
     
     private:
-    double stack;
-    Hand hand;
+    double m_stack;
 };

@@ -7,7 +7,7 @@
 class Hand
 {
 public:
-
+    Hand() = default;
     Hand(const Card& card_1, const Card& card_2);
 
     bool operator<=(const Hand& hand) const;
