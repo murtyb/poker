@@ -3,11 +3,8 @@
 #include <string>
 #include <vector>
 #include <map>
-
+#include "misc.h"
 using std::string;
-
-
-bool is_element_of(const string& x, const std::vector<string>& v);
 
 
 class Card

@@ -1,9 +1,20 @@
 #pragma once
 
-#include "game.h"
+#include <iostream>
+#include <utility>
+#include "misc.h"
+#include "game.h" 
+#include <map>
 
 
 class SimpleGame: public Game
 {
-    SimpleGame(std::vector<Player>& players, Deck deck);
+    public:
+    using Game::Game;
+    void get_user_input();
+    void request_input_message();
+    void print_options();
+    void run();
+    void play_pre_flop();
+    bool in_betting_phase();
 };

@@ -7,17 +7,7 @@
 
 using std::string;
 
-bool is_element_of(const string& x, const std::vector<string>& v)
-{
-    for (string element : v)
-    {
-        if (element == x)
-        {
-            return true;
-        }
-    }
-    return false;
-}
+
 
 
 Card::Card(const string& card_symbol)
