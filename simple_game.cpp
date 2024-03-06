@@ -101,6 +101,8 @@ void SimpleGame::play_pre_flop()
         execute_inputted_action();
         next_player();
     }
+    std::vector<Player> remaining_players = get_remaining_players();
+    assign_winnings(remaining_players);
 }
 
 bool SimpleGame::in_betting_phase()

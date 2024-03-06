@@ -47,9 +47,14 @@ class Game
         bool all_but_one_players_folded();
         void calculate_valid_options();
         bool all_but_one_players_folded_or_all_in();
-        bool all_players_folded_or_all_in();  
+        bool all_players_folded_or_all_in(); 
+        std::vector<Player> get_remaining_players();
+        void assign_winnings(std::vector<Player> remaining_players);
+        std::vector<Player> extract_winning_players(std::vector<Player> &remaining_players);
+        std::vector<Player>find_other_winners(std::vector<Player> &remaining_players, std::vector<Player> &winning_players);                                    
         void execute_inputted_action();
-        void next_player();  
+        void next_player(); 
+        void transfer_chips(std::vector<Player> winning_players, const std::vector<Player>& losing_players);
 
     private:
         int m_number_of_players;

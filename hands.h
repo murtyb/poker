@@ -11,6 +11,7 @@ public:
     Hand(const Card& card_1, const Card& card_2);
 
     bool operator<=(const Hand& hand) const;
+    bool operator==(const Hand& hand) const;
     bool get_is_pocket_pair() const;
     int get_high_card_value() const;
     int get_low_card_value() const;

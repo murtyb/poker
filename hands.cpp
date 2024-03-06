@@ -49,6 +49,13 @@ bool Hand::operator<=(const Hand& hand) const
     }
 }
 
+bool Hand::operator==(const Hand& hand) const
+{
+    if (m_card_1.get_value() != hand.m_card_1.get_value()) {return false;}
+    if (m_card_1.get_value() != hand.m_card_1.get_value()) {return false;}
+    return true;
+}
+
 bool Hand::get_is_pocket_pair() const
 {
     return m_is_pocket_pair;        

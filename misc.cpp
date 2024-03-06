@@ -12,17 +12,7 @@ bool is_element_of(const std::string& x, const std::vector<std::string>& v)
     return false;
 }
 
-bool is_element_of(const Player& x, const std::vector<Player>& v)
-{
-    for (Player element : v)
-    {
-        if (&element == &x)
-        {
-            return true;
-        }
-    }
-    return false;
-}
+
 
 void clear_cin()
 {
