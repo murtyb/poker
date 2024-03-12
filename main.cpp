@@ -5,6 +5,7 @@
 #include "cards.h"
 #include "hands.h"
 #include "deck.h"
+#include "simple_game.h"
 
 using std::string;
 
@@ -15,13 +16,12 @@ int main()
     try
     {
         Card::card_initialization();
-        std::vector<string> card_symbols = {"A", "A", "K" , "10"};
+        std::vector<string> card_symbols = {"A", "A", "K" ,"10", "10", "9", "9"};
         Deck deck(card_symbols);
-        Hand hand1 = deck.deal_hand();
-        Hand hand2 = deck.deal_hand();
-        Hand hand3 = deck.deal_hand();
+        std::vector<Player> players = {Player(100), Player(100), Player(100)};
+        SimpleGame Game1(players, deck, 0.5 , 1);
+        Game1.run();
 
-        std::cout << hand1 << "   " << hand2;
     }
     catch(const std::runtime_error& e)
     {

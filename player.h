@@ -16,6 +16,7 @@ class Player
     bool m_can_call;
     bool m_can_raise;
     bool m_can_go_all_in;
+    bool m_folded = false;
 
     Player(const float& starting_stack);
     void bet(const float& ammount);

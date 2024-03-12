@@ -25,7 +25,8 @@ class Game
         double m_desired_raise;
         std::string m_action;
         std::vector<std::string>  m_valid_inputs;
-
+        int m_big_blind_position;
+        
         static std::map<std::string, std::string> s_input_map;
 
         Game(std::vector<Player>& players, Deck deck, double small_blind, double big_blind);
@@ -47,16 +48,11 @@ class Game
         bool all_but_one_players_folded();
         void calculate_valid_options();
         bool all_but_one_players_folded_or_all_in();
-        bool all_players_folded_or_all_in(); 
-        std::vector<Player> get_remaining_players();
-        void assign_winnings(std::vector<Player> remaining_players);
-        std::vector<Player> extract_winning_players(std::vector<Player> &remaining_players);
-        std::vector<Player>find_other_winners(std::vector<Player> &remaining_players, std::vector<Player> &winning_players);                                    
+        bool all_players_folded_or_all_in();                             
         void execute_inputted_action();
         void next_player(); 
-        void transfer_chips(std::vector<Player> winning_players, const std::vector<Player>& losing_players);
 
     private:
         int m_number_of_players;
-        int m_big_blind_position;
+
 };

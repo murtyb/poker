@@ -17,4 +17,9 @@ class SimpleGame: public Game
     void run();
     void play_pre_flop();
     bool in_betting_phase();
+    void check_if_limped_to_big_blind();
+    void allocate_winnings();
+    void end_round();
+
+    bool m_limped_to_big_blind = false;
 };

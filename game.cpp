@@ -51,6 +51,7 @@ void Game::call()
 
 void Game::fold()
 {
+    m_action_player->m_folded = true;
     m_folded_players.push_back(*m_action_player);
 }
 
@@ -194,76 +195,6 @@ void Game::next_player()
     if (m_aggressor == m_action_player) {return;}
     if (is_element_of(*m_action_player, m_folded_players)) {next_player(); return;}
     if (is_element_of(*m_action_player, m_all_in_players)) {next_player(); return;}   
-}
-
-std::vector<Player> Game::get_remaining_players()
-{
-    std::vector<Player> remaining_players;
-    for (Player p: m_players)
-    {
-        if (is_element_of(p, m_folded_players)){continue;}
-        remaining_players.push_back(p);
-    }
-    
-}
-
-void Game::assign_winnings(std::vector<Player> remaining_players)
-{
-    if (remaining_players.size() == 1) {return;}
-    sort(remaining_players.begin(), remaining_players.end(), Player::compare_player_hands);
-    std::vector<Player> winning_players = extract_winning_players(remaining_players);
-    sort(winning_players.begin(), winning_players.end(), Player::compare_player_stacks);
-    std::reverse(winning_players.begin(), winning_players.end());
-    transfer_chips(winning_players, remaining_players);
-    assign_winnings(remaining_players);
-}
-
-void Game::players_retrieve_remaining_bets(remaining)
-
-
-std::vector<Player> Game::extract_winning_players(std::vector<Player>& remaining_players) //moves winners from remaining players to winning players
-{
-    Player* first_winner = &remaining_players.back();
-    remaining_players.pop_back();
-    std::vector<Player> winning_players = {*first_winner};
-    find_other_winners(remaining_players, winning_players);
-    return winning_players;
-}
-
-std::vector<Player> Game::find_other_winners(std::vector<Player>& remaining_players, std::vector<Player>& winning_players)
-{
-    if (remaining_players.size() == 0)
-    {
-        return winning_players;
-    }
-    Player* potential_winner = &remaining_players.back();
-    if (potential_winner->m_hand == winning_players.back().m_hand)
-    {
-        remaining_players.pop_back();
-        find_other_winners(remaining_players, winning_players);
-    }
-    return winning_players;
-}
-
-void Game::transfer_chips(std::vector<Player> winning_players, const std::vector<Player>& losing_players)
-{
-    int num_of_winners = winning_players.size();
-    if (num_of_winners == 0) {return;}
-    Player* smallest_winner = &winning_players.back();
-    winning_players.pop_back();
-    for (Player player: losing_players)
-    {
-        if(player.m_ammount_bet < smallest_winner->m_ammount_bet)
-        {
-            smallest_winner->transfer(player, player.m_ammount_bet/num_of_winners);
-        }
-        else
-        {
-            smallest_winner->transfer(player, smallest_winner->m_ammount_bet/num_of_winners);
-        }
-    }
-    transfer_chips(winning_players, losing_players);
-
 }
 
 
