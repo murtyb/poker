@@ -86,6 +86,7 @@ bool Card::operator<=(const Card& card) const
 
 std::ostream& operator<<(std::ostream& stream, const Card& card)
 {
+    std::cout << "yes";
     return stream << card.m_card_symbol;
 }
 

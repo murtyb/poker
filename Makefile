@@ -1,5 +1,5 @@
-poker: misc.o cards.o hands.o deck.o player.o pot.o game.o simple_game. o main.o
-	g++ misc.o cards.o hands.o deck.o player.o pot.o game.o simple_game. o main.o -o poker
+poker: misc.o cards.o hands.o deck.o player.o pot.o game.o simple_game.o main.o
+	g++ misc.o cards.o hands.o deck.o player.o pot.o game.o simple_game.o main.o -o poker
 
 misc.o: misc.cpp misc.h
 	g++ -std=c++17 -c misc.cpp

@@ -35,4 +35,4 @@ void Player::transfer(Player losing_player, double ammount_owed)
     m_stack + ammount_owed;
 }
 
-int s_number_of_players = 0;
+int Player::s_number_of_players = 0; 

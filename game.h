@@ -10,13 +10,13 @@
 class Game
 {
     public:
-        std::vector<Player> m_players;
+        std::vector<Player>& m_players;
         std::vector<Player> m_folded_players;
         std::vector<Player> m_all_in_players;
         int m_button_location;
         int m_action_player_location;
-        Player* m_action_player;
-        Player* m_aggressor;
+        Player* m_action_player = nullptr;
+        Player* m_aggressor = nullptr;
         double m_small_blind;
         double m_big_blind;
         double m_utg_position;
@@ -56,3 +56,5 @@ class Game
         int m_number_of_players;
 
 };
+
+bool is_element_of(const Player& x, const std::vector<Player>& v);

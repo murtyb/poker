@@ -13,8 +13,10 @@ Game::Game(std::vector<Player>& players, Deck deck, double small_blind = SMALL_B
       m_deck(deck), m_small_blind(small_blind), 
       m_big_blind(big_blind),
       m_big_blind_position(2 % m_number_of_players),
-      m_utg_position(3 % m_number_of_players)
-{    
+      m_utg_position(3 % m_number_of_players),
+      m_aggressor(nullptr)
+{
+    std::cout << &m_players[m_utg_position] <<std::endl; 
 }
 
 void Game::set_positions()
@@ -65,6 +67,7 @@ void Game::end_round()
 {
     m_all_in_players = {};
     m_folded_players = {};
+    m_deck.reset_deck();
     move_button();
 }
 
@@ -84,10 +87,12 @@ void Game::post_blinds()
 
 void Game::pre_flop_setup()
 {
-    post_blinds();
-    m_aggressor = &m_players[m_utg_position];
+    post_blinds();  
+    m_aggressor = nullptr;
     m_last_raise = m_big_blind;
     m_action_player_location = m_utg_position;
+    m_action_player = &m_players[m_utg_position];
+    deal_hands();
 }
 
 bool Game::is_valid_raise(const double& desired_raise)
@@ -198,7 +203,7 @@ void Game::next_player()
 }
 
 
-std::map<std::string, std::string> s_input_map = {{"fold", "f"}, {"check", "ch"}, {"call", "c"}, {"raise", "r"}, {"all in", "a"}};
+std::map<std::string, std::string> Game::s_input_map = {{"fold", "f"}, {"check", "ch"}, {"call", "c"}, {"raise", "r"}, {"all in", "a"}};
 
 bool is_element_of(const Player& x, const std::vector<Player>& v)
 {

@@ -42,9 +42,9 @@ void SimpleGame::get_user_input()
 void SimpleGame::request_input_message()
 {
     std::cout << "Player " << m_action_player->m_id << ": ";
-    std::cout << "You are in position" << m_action_player->m_position << ", ";
-    std::cout << "your stack size is: " << m_action_player->m_stack << ", ";
-    std::cout << "and so far you have bet" << m_action_player->m_ammount_bet << ".\n ";
+    std::cout << "You are in position " << m_action_player->m_position << ", ";
+    std::cout << "your stack size is: " << m_action_player->m_stack << "bb, ";
+    std::cout << "and so far you have bet " << m_action_player->m_ammount_bet << "bb.\n";
     std::cout << "You have " << m_action_player->m_hand << "and the current price is " << m_highest_bet << "\n";
     std::cout << "Your options are:\n";
     print_options();
@@ -55,30 +55,30 @@ void SimpleGame::print_options()
     int option_number = 1;
     if (m_action_player ->m_can_fold) 
     {
-        std::cout << option_number << '. ' << "fold" << '('<< s_input_map["fold"] << ')';
+        std::cout << option_number << ". " << "fold" << '('<< s_input_map["fold"] << ')';
         option_number++;
     }
 
     if (m_action_player ->m_can_check) 
     {
-        std::cout << option_number << '. ' << "check" << '(' << s_input_map["check"] << ')' << std::endl;
+        std::cout << option_number << ". " << "check" << '(' << s_input_map["check"] << ')' << std::endl;
         option_number++;
     }
 
     if (m_action_player ->m_can_call) 
     {
-        std::cout << option_number << '. ' << "call" << '(' << s_input_map["call"] << ')' << std::endl;
+        std::cout << option_number << ". " << "call" << '(' << s_input_map["call"] << ')' << std::endl;
         option_number++;
     }
     if (m_action_player ->m_can_raise) 
     {
-        std::cout << option_number << '. ' << "raise" << '(' << s_input_map["raise"] << ')' << std::endl;
+        std::cout << option_number << ". " << "raise" << '(' << s_input_map["raise"] << ')' << std::endl;
         option_number++;
     }
 
     if (m_action_player ->m_can_go_all_in) 
     {
-        std::cout << option_number << '. ' << "all in" << '(' << s_input_map["all in"] << ')' << std::endl;
+        std::cout << option_number << ". " << "all in" << '(' << s_input_map["all in"] << ')' << std::endl;
         option_number++;
     }
 }
