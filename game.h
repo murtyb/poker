@@ -11,8 +11,9 @@ class Game
 {
     public:
         std::vector<Player>& m_players;
-        std::vector<Player> m_folded_players;
-        std::vector<Player> m_all_in_players;
+        int m_number_of_players;
+        std::vector<Player*> m_folded_players;
+        std::vector<Player*> m_all_in_players;
         int m_button_location;
         int m_action_player_location;
         Player* m_action_player = nullptr;
@@ -23,7 +24,7 @@ class Game
         double m_last_raise;
         double m_highest_bet;
         double m_desired_raise;
-        std::string m_action;
+        std::string m_action = "";
         std::vector<std::string>  m_valid_inputs;
         int m_big_blind_position;
         
@@ -53,7 +54,6 @@ class Game
         void next_player(); 
 
     private:
-        int m_number_of_players;
 
 };
 

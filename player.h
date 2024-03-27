@@ -29,3 +29,5 @@ class Player
 private:
     static int s_number_of_players;
 };
+
+std::vector<Player*> pointer_copy(std::vector<Player>& vect);

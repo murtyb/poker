@@ -14,19 +14,19 @@ Game::Game(std::vector<Player>& players, Deck deck, double small_blind = SMALL_B
       m_big_blind(big_blind),
       m_big_blind_position(2 % m_number_of_players),
       m_utg_position(3 % m_number_of_players),
-      m_aggressor(nullptr)
+      m_aggressor(nullptr),
+      m_action_player(nullptr)
 {
-    std::cout << &m_players[m_utg_position] <<std::endl; 
 }
 
 void Game::set_positions()
 {
     int x = m_button_location;
-    for (int i; i < m_number_of_players; i++ )
+    for (int i = 0; i < m_number_of_players; i++ )
     {
         m_players[x].m_position = i;
         x++;
-        x % m_number_of_players;
+        x = x % m_number_of_players;
     }
 }
 
@@ -54,12 +54,13 @@ void Game::call()
 void Game::fold()
 {
     m_action_player->m_folded = true;
-    m_folded_players.push_back(*m_action_player);
+    m_folded_players.push_back(m_action_player);
 }
 
 void Game::all_in()
 {
-    (*m_action_player).bet((*m_action_player).m_stack);
+    m_action_player->bet(m_action_player->m_stack);
+    m_all_in_players.push_back(m_action_player);
     
 }
 
@@ -73,7 +74,7 @@ void Game::end_round()
 
 void Game::deal_hands()
 {
-    for (Player player: m_players)
+    for (Player& player: m_players)
     {
         player.m_hand = m_deck.deal_hand();
     }
@@ -83,10 +84,12 @@ void Game::post_blinds()
 {
     m_players[1].bet(m_small_blind);
     m_players[m_big_blind_position].bet(m_big_blind);
+    m_highest_bet = m_big_blind;
 }
 
 void Game::pre_flop_setup()
 {
+    move_button();
     post_blinds();  
     m_aggressor = nullptr;
     m_last_raise = m_big_blind;
@@ -198,18 +201,18 @@ void Game::next_player()
     m_action_player_location = (m_action_player_location + 1) % m_number_of_players;
     m_action_player = &m_players[m_action_player_location];
     if (m_aggressor == m_action_player) {return;}
-    if (is_element_of(*m_action_player, m_folded_players)) {next_player(); return;}
-    if (is_element_of(*m_action_player, m_all_in_players)) {next_player(); return;}   
+    if (is_element_of(m_action_player, m_folded_players)) {next_player(); return;}
+    if (is_element_of(m_action_player, m_all_in_players)) {next_player(); return;}   
 }
 
 
 std::map<std::string, std::string> Game::s_input_map = {{"fold", "f"}, {"check", "ch"}, {"call", "c"}, {"raise", "r"}, {"all in", "a"}};
 
-bool is_element_of(const Player& x, const std::vector<Player>& v)
+bool is_element_of(Player* x, std::vector<Player*>& v)
 {
-    for (Player element : v)
+    for (Player* element : v)
     {
-        if (&element == &x)
+        if (element == x)
         {
             return true;
         }

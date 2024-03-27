@@ -36,3 +36,14 @@ void Player::transfer(Player losing_player, double ammount_owed)
 }
 
 int Player::s_number_of_players = 0; 
+
+
+std::vector<Player*> pointer_copy(std::vector<Player>& vect)
+{
+    std::vector<Player*> output;
+    for (Player& element : vect)
+    {
+        output.push_back(&element);
+    }
+    return output;
+}

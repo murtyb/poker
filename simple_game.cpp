@@ -55,7 +55,7 @@ void SimpleGame::print_options()
     int option_number = 1;
     if (m_action_player ->m_can_fold) 
     {
-        std::cout << option_number << ". " << "fold" << '('<< s_input_map["fold"] << ')';
+        std::cout << option_number << ". " << "fold" << '('<< s_input_map["fold"] << ')' << std::endl;
         option_number++;
     }
 
@@ -89,7 +89,6 @@ void SimpleGame::run()
     {
         pre_flop_setup();
         play_pre_flop();
-        allocate_winnings();
         end_round();
     }
 }
@@ -124,18 +123,20 @@ void SimpleGame::check_if_limped_to_big_blind()
 
 void SimpleGame::allocate_winnings()
 {
-    PotArray SidePots(m_players);
+    std::vector<Player*> temp = pointer_copy(m_players);
+    PotArray SidePots(temp);
     SidePots.find_and_pay_winners();
 }
 
 void SimpleGame::end_round()
 {
     m_limped_to_big_blind = false;
+    m_folded_players = {};
     for (Player player: m_players)
     {
         player.m_folded = false;
     }
-    move_button();
+    m_deck.reset_deck();
 }
 
 
