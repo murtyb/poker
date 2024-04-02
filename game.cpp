@@ -10,31 +10,33 @@
 Game::Game(std::vector<Player>& players, Deck deck, double small_blind = SMALL_BLIND, double big_blind = BIG_BLIND)
     : m_players(players), 
       m_number_of_players(players.size()), 
-      m_deck(deck), m_small_blind(small_blind), 
+      m_deck(deck), 
+      m_small_blind(small_blind), 
       m_big_blind(big_blind),
       m_big_blind_position(2 % m_number_of_players),
       m_utg_position(3 % m_number_of_players),
       m_aggressor(nullptr),
-      m_action_player(nullptr)
+      m_action_player(nullptr),
+      m_button_location(0)
 {
 }
 
 void Game::set_positions()
 {
-    int x = m_button_location;
-    for (int i = 0; i < m_number_of_players; i++ )
+    int x = 0;
+    for (Player& p: m_players)
     {
-        m_players[x].m_position = i;
+        p.m_position = x;
         x++;
-        x = x % m_number_of_players;
     }
 }
 
 void Game::move_button()
 {
-    m_button_location = (m_button_location + 1) % m_number_of_players;
+    Player& last_button = m_players.front();
+    m_players.push_back(last_button);
+    m_players.erase(m_players.begin());
     set_positions();
-    std::sort(m_players.begin(), m_players.end(), &Player::compare_player_positions);
 }
 
 void Game::raise(const double& ammount_raised_to)// "
@@ -48,7 +50,8 @@ void Game::raise(const double& ammount_raised_to)// "
 
 void Game::call()
 {
-    float ammount_extra = m_highest_bet - (*m_action_player).m_ammount_bet; 
+    float ammount_extra = m_highest_bet - m_action_player->m_ammount_bet;
+    m_action_player->bet(ammount_extra); 
 }
 
 void Game::fold()
@@ -61,7 +64,7 @@ void Game::all_in()
 {
     m_action_player->bet(m_action_player->m_stack);
     m_all_in_players.push_back(m_action_player);
-    
+    if (m_action_player->m_ammount_bet > m_highest_bet) {m_highest_bet = m_action_player->m_ammount_bet;}  
 }
 
 void Game::end_round()
@@ -192,6 +195,11 @@ void Game::execute_inputted_action()
     if (m_action == "r")
     {
         raise(m_desired_raise);
+        return;
+    }
+    if (m_action == "a")
+    {
+        all_in();
         return;
     }
 }

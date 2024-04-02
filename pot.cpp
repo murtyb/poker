@@ -20,8 +20,8 @@ void Pot::gather_chips()
     {
         if(player->m_ammount_bet <= m_contribution_cap)
         {
-            player->m_ammount_bet = 0;
             m_pot_total += player->m_ammount_bet;
+            player->m_ammount_bet = 0;
         }
         else
         {
@@ -53,7 +53,7 @@ std::vector<Player*> Pot::find_non_folded_players()
 
 Hand Pot::find_winning_hand(std::vector<Player*>& non_folded_players)
 {
-    sort(non_folded_players.begin(), non_folded_players.end(), Player::compare_player_hands);
+    sort(non_folded_players.begin(), non_folded_players.end(), [](Player* p1, Player* p2) {return Player::compare_player_hands(*p1, *p2);});
     return non_folded_players.back()->m_hand;
 }
 
@@ -93,7 +93,7 @@ void PotArray::create_side_pots(std::vector<Player*>& players)
 
 void PotArray::order_players_by_decreasing_stack(std::vector<Player*>& players)
 {
-    sort(players.begin(), players.end(), Player::compare_player_stacks);
+    sort(players.begin(), players.end(), [](Player* p1, Player* p2) {return Player::compare_player_stacks(*p1, *p2);});
     std::reverse(players.begin(), players.end());
 }
 

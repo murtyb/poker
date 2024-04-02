@@ -57,4 +57,4 @@ class Game
 
 };
 
-bool is_element_of(const Player& x, const std::vector<Player>& v);
+bool is_element_of(Player* x, std::vector<Player*>& v);

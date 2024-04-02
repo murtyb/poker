@@ -45,7 +45,7 @@ void SimpleGame::request_input_message()
     std::cout << "You are in position " << m_action_player->m_position << ", ";
     std::cout << "your stack size is: " << m_action_player->m_stack << "bb, ";
     std::cout << "and so far you have bet " << m_action_player->m_ammount_bet << "bb.\n";
-    std::cout << "You have " << m_action_player->m_hand << "and the current price is " << m_highest_bet << "\n";
+    std::cout << "You have " << m_action_player->m_hand << " and the current price is " << m_highest_bet << "\n";
     std::cout << "Your options are:\n";
     print_options();
 }
