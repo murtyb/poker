@@ -11,12 +11,11 @@
 class Game
 {
     public:
-        std::vector<Player>& m_players;
+        std::vector<Player*> m_players;
         Table m_table;
         int m_number_of_players;
-        std::vector<Player*> m_folded_players;
-        std::vector<Player*> m_all_in_players;
-        int m_action_player_location;
+        int m_num_of_folded_players = 0;
+        int m_num_of_all_in_players = 0;
         Player* m_action_player = nullptr;
         Player* m_aggressor = nullptr;
         double m_small_blind;
@@ -26,7 +25,7 @@ class Game
         double m_highest_bet;
         double m_desired_raise;
         std::string m_action = "";
-        std::vector<std::string>  m_valid_inputs;
+        std::vector<std::string> m_valid_inputs;
         int m_big_blind_position;
         
         static std::map<std::string, std::string> s_input_map;

@@ -1,14 +1,14 @@
 #include "Pot.h"
 
-Pot::Pot(std::vector<Player*>& possible_winners)
+Pot::Pot(std::vector<Player*> possible_winners)
     : m_possible_winners(possible_winners), 
-      m_contribution_cap(calculate_cap()), 
+      m_contribution(calculate_contribution()), 
       m_pot_total(0)
 {
     gather_chips();
 }
 
-double Pot::calculate_cap()
+double Pot::calculate_contribution()
 {
     Player* player_with_smallest_bet = m_possible_winners.back();
     return  player_with_smallest_bet->m_ammount_bet;
@@ -18,16 +18,8 @@ void Pot::gather_chips()
 {
     for (Player* player: m_possible_winners)
     {
-        if(player->m_ammount_bet <= m_contribution_cap)
-        {
-            m_pot_total += player->m_ammount_bet;
-            player->m_ammount_bet = 0;
-        }
-        else
-        {
-            player->m_ammount_bet -= m_contribution_cap;
-            m_pot_total += m_contribution_cap;
-        } 
+        player->m_ammount_bet -= m_contribution;
+        m_pot_total += m_contribution;
     }
 }
 

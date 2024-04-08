@@ -119,23 +119,21 @@ bool SimpleGame::in_betting_phase()
 
 void SimpleGame::check_if_limped_to_big_blind()
 {
-    m_limped_to_big_blind = (m_aggressor == nullptr && m_action_player == &m_players[m_big_blind_position]);
+    m_limped_to_big_blind = (m_aggressor == nullptr && m_action_player == m_players[m_big_blind_position]);
 }
 
 void SimpleGame::allocate_winnings()
 {
-    PotArray SidePots(pointer_copy(m_players));
+    PotArray SidePots(m_players);
     SidePots.find_and_pay_winners();
 }
 
 void SimpleGame::end_round()
 {
     m_limped_to_big_blind = false;
-    m_folded_players = {};
-    m_all_in_players = {};
-    for (Player player: m_players)
+    for (Player* player: m_players)
     {
-        player.m_folded = false;
+        player->m_folded = false;
     }
     m_deck.reset_deck();
 }

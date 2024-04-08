@@ -9,7 +9,7 @@
 
 
 Game::Game(std::vector<Player>& players, Deck deck, double small_blind = SMALL_BLIND, double big_blind = BIG_BLIND)
-    : m_players(players), 
+    : m_players(pointer_copy(players)), 
       m_number_of_players(players.size()), 
       m_deck(deck), 
       m_small_blind(small_blind), 
@@ -25,9 +25,9 @@ Game::Game(std::vector<Player>& players, Deck deck, double small_blind = SMALL_B
 void Game::set_positions()
 {
     int x = 0;
-    for (Player& p: m_players)
+    for (Player* p: m_players)
     {
-        p.m_position = x;
+        p->m_position = x;
         x++;
     }
 }
@@ -38,9 +38,10 @@ void Game::move_button()
     set_positions();
 }
 
-void Game::raise(const double& ammount_raised_to)// "
+void Game::raise(const double& ammount_raised_to)
 {
-    float ammount_extra = ammount_raised_to - (*m_action_player).m_ammount_bet; 
+    if (ammount_raised_to >= m_action_player->m_stack) {all_in(); return;}
+    float ammount_extra = ammount_raised_to - m_action_player->m_ammount_bet; 
     m_action_player->bet(ammount_extra);
     m_aggressor = m_action_player;
     m_last_raise = ammount_raised_to - m_highest_bet;
@@ -56,13 +57,14 @@ void Game::call()
 void Game::fold()
 {
     m_action_player->m_folded = true;
-    m_folded_players.push_back(m_action_player);
+    m_num_of_folded_players++;
 }
 
 void Game::all_in()
 {
     m_action_player->bet(m_action_player->m_stack);
-    m_all_in_players.push_back(m_action_player);
+    m_action_player->m_is_all_in = true;
+    m_num_of_all_in_players++;
     if (m_action_player->m_ammount_bet > m_highest_bet)
     {
         m_highest_bet = m_action_player->m_ammount_bet;
@@ -72,24 +74,22 @@ void Game::all_in()
 
 void Game::end_round()
 {
-    m_all_in_players = {};
-    m_folded_players = {};
     m_deck.reset_deck();
     move_button();
 }
 
 void Game::deal_hands()
 {
-    for (Player& player: m_players)
+    for (Player* player: m_players)
     {
-        player.m_hand = m_deck.deal_hand();
+        player->m_hand = m_deck.deal_hand();
     }
 }
 
 void Game::post_blinds()
 {
-    m_players[1].bet(m_small_blind);
-    m_players[m_big_blind_position].bet(m_big_blind);
+    m_players[1]->bet(m_small_blind);
+    m_players[m_big_blind_position]->bet(m_big_blind);
     m_highest_bet = m_big_blind;
 }
 
@@ -99,8 +99,7 @@ void Game::pre_flop_setup()
     post_blinds();  
     m_aggressor = nullptr;
     m_last_raise = m_big_blind;
-    m_action_player_location = m_utg_position;
-    m_action_player = &m_players[m_utg_position];
+    m_action_player = m_players[m_utg_position];
     deal_hands();
 }
 
@@ -112,32 +111,32 @@ bool Game::is_valid_raise(const double& desired_raise)
 
 bool Game::all_in_to_raise()
 {
-    return m_last_raise >= (*m_action_player).m_ammount_bet + (*m_action_player).m_stack - m_highest_bet;
+    return m_last_raise >= m_action_player->m_ammount_bet + m_action_player->m_stack - m_highest_bet;
 }
 
 bool Game::all_in_to_call()
 {
-    return  m_highest_bet >= (*m_action_player).m_ammount_bet + (*m_action_player).m_stack;
+    return  m_highest_bet >= m_action_player->m_ammount_bet + m_action_player->m_stack;
 }
 
 bool Game::all_but_one_players_folded()//checks if all but one player has folded.
 {
-    return m_players.size() - m_folded_players.size() == 1;
+    return m_players.size() - m_num_of_folded_players == 1;
 }
 
 bool Game::all_but_one_players_folded_or_all_in()//checks if all but one player has folded.
 {
-    return m_players.size() - m_folded_players.size() - m_all_in_players.size() == 1;
+    return m_players.size() - m_num_of_folded_players - m_num_of_all_in_players == 1;
 }
 
 bool Game::all_players_folded_or_all_in()//checks if all but one player has folded.
 {
-    return m_players.size() == m_folded_players.size() + m_all_in_players.size();
+    return m_players.size() == m_num_of_folded_players + m_num_of_all_in_players;
 }
 
 void Game::calculate_valid_options()
 {
-    m_valid_inputs = {"f"};
+    m_valid_inputs = {s_input_map["fold"]};
     if (m_action_player->m_ammount_bet == m_highest_bet)
     {
         m_action_player->m_can_check = true;
@@ -212,30 +211,18 @@ void Game::execute_inputted_action()
 
 void Game::next_player()
 {
-    m_action_player_location = (m_action_player_location + 1) % m_number_of_players;
-    m_action_player = &m_players[m_action_player_location];
+    int new_action_player_location = (m_action_player->m_position + 1) % m_number_of_players;
+    m_action_player = m_players[new_action_player_location];
     if (m_aggressor == m_action_player) {return;}
-    if (is_element_of(m_action_player, m_folded_players)) {next_player(); return;}
-    if (is_element_of(m_action_player, m_all_in_players)) {next_player(); return;}   
-}
-
-
-std::map<std::string, std::string> Game::s_input_map = {{"fold", "f"}, {"check", "ch"}, {"call", "c"}, {"raise", "r"}, {"all in", "a"}};
-
-bool is_element_of(Player* x, std::vector<Player*>& v)
-{
-    for (Player* element : v)
-    {
-        if (element == x)
-        {
-            return true;
-        }
-    }
-    return false;
+    if (m_action_player->m_folded) {next_player(); return;}
+    if (m_action_player->m_is_all_in) {next_player(); return;}   
 }
 
 void Game::draw_table()
 {
     m_table.draw();
 }
+
+std::map<std::string, std::string> Game::s_input_map = {{"fold", "f"}, {"check", "ch"}, {"call", "c"}, {"raise", "r"}, {"all in", "a"}};
+
  

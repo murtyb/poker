@@ -8,8 +8,8 @@
 class Pot
 {
     public:
-        Pot(std::vector<Player*>& possible_winners);
-        double calculate_cap();
+        Pot(std::vector<Player*> possible_winners);
+        double calculate_contribution();
         void gather_chips();
         Hand find_winning_hand(std::vector<Player*>& non_folded_players);
         std::vector<Player*> find_winners(std::vector<Player*>& non_folded_players);
@@ -18,7 +18,7 @@ class Pot
         std::vector<Player*> find_non_folded_players();
 
         std::vector<Player*> m_possible_winners;
-        double m_contribution_cap;
+        double m_contribution;
         double m_pot_total;
 };
 
