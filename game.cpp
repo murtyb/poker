@@ -8,7 +8,7 @@
 
 
 
-Game::Game(std::vector<Player>& players, Deck deck, double small_blind = SMALL_BLIND, double big_blind = BIG_BLIND)
+Game::Game(std::vector<PokerPlayer>& players, Deck deck, double small_blind = SMALL_BLIND, double big_blind = BIG_BLIND)
     : m_players(pointer_copy(players)), 
       m_number_of_players(players.size()), 
       m_deck(deck), 
@@ -25,7 +25,7 @@ Game::Game(std::vector<Player>& players, Deck deck, double small_blind = SMALL_B
 void Game::set_positions()
 {
     int x = 0;
-    for (Player* p: m_players)
+    for (PokerPlayer* p: m_players)
     {
         p->m_position = x;
         x++;
@@ -80,7 +80,7 @@ void Game::end_round()
 
 void Game::deal_hands()
 {
-    for (Player* player: m_players)
+    for (PokerPlayer* player: m_players)
     {
         player->m_hand = m_deck.deal_hand();
     }

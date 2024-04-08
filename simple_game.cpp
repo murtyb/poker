@@ -11,7 +11,7 @@ void SimpleGame::get_user_input()
         return;
     }
 
-    if (! is_valid_action())
+    if (!is_valid_action())
     {
         std::cout << "invalid input\n";
         get_user_input();
@@ -30,7 +30,7 @@ void SimpleGame::get_user_input()
         return;
     }
     
-    if (! is_valid_raise(m_desired_raise))
+    if (!is_valid_raise(m_desired_raise))
     {
         std::cout << "invalid raise\n";
         get_user_input();
@@ -95,7 +95,7 @@ void SimpleGame::run()
 
 void SimpleGame::play_pre_flop()
 {
-     while (in_betting_phase())
+    while (in_betting_phase())
     {
         calculate_valid_options();
         draw_table();
@@ -130,8 +130,10 @@ void SimpleGame::allocate_winnings()
 
 void SimpleGame::end_round()
 {
+    m_num_of_all_in_players = 0;
+    m_num_of_folded_players = 0;
     m_limped_to_big_blind = false;
-    for (Player* player: m_players)
+    for (PokerPlayer* player: m_players)
     {
         player->m_folded = false;
     }

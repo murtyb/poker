@@ -22,7 +22,7 @@ std::string chips_to_string(float bet, int precision)
     return no_dec_point.insert(ordr_of_mag, 1, '.');
 }
 
-Table::Table(std::vector<Player*> players, int table_width)
+Table::Table(std::vector<PokerPlayer*> players, int table_width)
     :m_top_player(players[0]),
      m_table_width(table_width),
      m_vertical_edges_segment(vertical_edges(3))
@@ -31,13 +31,13 @@ Table::Table(std::vector<Player*> players, int table_width)
     set_side_players(players);
 }
 
-void Table::set_bottom_player(const std::vector<Player*>& players)
+void Table::set_bottom_player(const std::vector<PokerPlayer*>& players)
 {
     if (players.size() % 2 == 0) {m_bottom_player = players[players.size()/2 - 1];}
     else {m_bottom_player = nullptr;}
 }
 
-void Table::set_side_players(const std::vector<Player*>& players)
+void Table::set_side_players(const std::vector<PokerPlayer*>& players)
 {
     int n = players.size();
     for (int i = 1; i < n / 2.0 ; i++)
@@ -46,7 +46,7 @@ void Table::set_side_players(const std::vector<Player*>& players)
     }
 }
 
-std::string Table::left_seat_format(Player* left_player)
+std::string Table::left_seat_format(PokerPlayer* left_player)
 {
     std::string stack_string = chips_to_string(left_player->m_stack, m_precision);
     std::string left_player_info = stack_string + "bb P" + std::to_string(left_player->m_id);
@@ -54,7 +54,7 @@ std::string Table::left_seat_format(Player* left_player)
     return left_player_info;
 }
 
-std::string Table::right_seat_format(Player* right_player)
+std::string Table::right_seat_format(PokerPlayer* right_player)
 {
     std::string stack_string = chips_to_string(right_player->m_stack, m_precision);
     std::string right_player_info = right_player->m_hand.get_symbols();
@@ -73,34 +73,34 @@ std::string Table::vertical_edges(const int height)
     return output;
 }
 
-void Table::draw_midddle_section(Player* left_player, Player* right_player)
+void Table::draw_midddle_section(PokerPlayer* left_player, PokerPlayer* right_player)
 {
     std::cout << m_vertical_edges_segment;
     draw_player_line(left_player, right_player);
     std::cout << m_vertical_edges_segment;
 }
 
-void Table::draw_player_line(Player* left_player, Player* right_player)
+void Table::draw_player_line(PokerPlayer* left_player, PokerPlayer* right_player)
 {
     draw_left_player(left_player);
     draw_bets_and_sides(left_player, right_player);
     draw_right_player(right_player);
 }
 
-void Table::draw_left_player(Player* left_player)
+void Table::draw_left_player(PokerPlayer* left_player)
 {
     std::string left_player_stats = left_seat_format(left_player);
     std::string margin = std::string(m_left_margin.size() - left_player_stats.size(), ' ');
     std::cout << margin << left_player_stats;
 }
 
-void Table::draw_right_player(Player* right_player)
+void Table::draw_right_player(PokerPlayer* right_player)
 {
     std::string right_player_stats = right_seat_format(right_player);
     std::cout << " " << right_player_stats << std::endl;
 }
 
-void Table::draw_bets_and_sides(Player* left_player, Player* right_player)
+void Table::draw_bets_and_sides(PokerPlayer* left_player, PokerPlayer* right_player)
 {
     std::string right_bet = chips_to_string(right_player->m_ammount_bet, m_precision) + "bb";
     std::string left_bet = chips_to_string(left_player->m_ammount_bet, m_precision) + "bb";
@@ -120,7 +120,7 @@ void Table::draw_top()
     draw_bet_line(m_top_player);
 }
 
-void Table::draw_bet_line(Player* player)
+void Table::draw_bet_line(PokerPlayer* player)
 {
     std::string bet_string;
     if (player == nullptr) {bet_string = "";}
@@ -150,7 +150,7 @@ void Table::draw_bottom()
     std::cout << bottom_player_format(m_bottom_player);   
 }
 
-std::string Table::bottom_player_format(Player* player)
+std::string Table::bottom_player_format(PokerPlayer* player)
 {
     if (m_bottom_player == nullptr) {return "\n";}
     std::string spacing = std::string(m_table_width / 2, ' ') + m_left_margin;

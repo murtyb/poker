@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <algorithm>
-#include "player.h"
+#include "pokerplayer.h"
 #include "deck.h"
 #include "misc.h"
 #include "table.h"
@@ -11,13 +11,13 @@
 class Game
 {
     public:
-        std::vector<Player*> m_players;
+        std::vector<PokerPlayer*> m_players;
         Table m_table;
+        PokerPlayer* m_action_player = nullptr;
+        PokerPlayer* m_aggressor = nullptr;
         int m_number_of_players;
         int m_num_of_folded_players = 0;
         int m_num_of_all_in_players = 0;
-        Player* m_action_player = nullptr;
-        Player* m_aggressor = nullptr;
         double m_small_blind;
         double m_big_blind;
         double m_utg_position;
@@ -30,7 +30,7 @@ class Game
         
         static std::map<std::string, std::string> s_input_map;
 
-        Game(std::vector<Player>& players, Deck deck, double small_blind, double big_blind);
+        Game(std::vector<PokerPlayer>& players, Deck deck, double small_blind, double big_blind);
         Deck m_deck;
         void set_positions();
         void move_button();
@@ -57,5 +57,3 @@ class Game
     private:
 
 };
-
-bool is_element_of(Player* x, std::vector<Player*>& v);
