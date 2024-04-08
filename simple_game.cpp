@@ -95,9 +95,10 @@ void SimpleGame::run()
 
 void SimpleGame::play_pre_flop()
 {
-    while (in_betting_phase())
+     while (in_betting_phase())
     {
         calculate_valid_options();
+        draw_table();
         request_input_message();
         get_user_input();
         execute_inputted_action();
@@ -132,9 +133,11 @@ void SimpleGame::end_round()
 {
     m_limped_to_big_blind = false;
     m_folded_players = {};
+    m_all_in_players = {};
     for (Player player: m_players)
     {
         player.m_folded = false;
+        player.m_can_go_all_in = true;
     }
     m_deck.reset_deck();
 }

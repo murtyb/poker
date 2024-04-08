@@ -4,6 +4,7 @@
 
 #define SMALL_BLIND 0.5
 #define BIG_BLIND 1
+#define TABLE_WIDTH 30
 
 
 
@@ -17,7 +18,8 @@ Game::Game(std::vector<Player>& players, Deck deck, double small_blind = SMALL_B
       m_utg_position(3 % m_number_of_players),
       m_aggressor(nullptr),
       m_action_player(nullptr),
-      m_button_location(0)
+      m_button_location(0),
+      m_table(Table(pointer_copy(m_players), 30))
 {
 }
 
@@ -33,16 +35,14 @@ void Game::set_positions()
 
 void Game::move_button()
 {
-    Player& last_button = m_players.front();
-    m_players.push_back(last_button);
-    m_players.erase(m_players.begin());
+    std::rotate(m_players.begin(), m_players.begin() + 1, m_players.end());
     set_positions();
 }
 
 void Game::raise(const double& ammount_raised_to)// "
 {
     float ammount_extra = ammount_raised_to - (*m_action_player).m_ammount_bet; 
-    (*m_action_player).bet(ammount_extra);
+    m_action_player->bet(ammount_extra);
     m_aggressor = m_action_player;
     m_last_raise = ammount_raised_to - m_highest_bet;
     m_highest_bet = ammount_raised_to;
@@ -64,7 +64,11 @@ void Game::all_in()
 {
     m_action_player->bet(m_action_player->m_stack);
     m_all_in_players.push_back(m_action_player);
-    if (m_action_player->m_ammount_bet > m_highest_bet) {m_highest_bet = m_action_player->m_ammount_bet;}  
+    if (m_action_player->m_ammount_bet > m_highest_bet)
+    {
+        m_highest_bet = m_action_player->m_ammount_bet;
+        m_aggressor = m_action_player;
+    }  
 }
 
 void Game::end_round()
@@ -134,6 +138,7 @@ bool Game::all_players_folded_or_all_in()//checks if all but one player has fold
 
 void Game::calculate_valid_options()
 {
+    m_valid_inputs = {"f"};
     if (m_action_player->m_ammount_bet == m_highest_bet)
     {
         m_action_player->m_can_check = true;
@@ -228,3 +233,8 @@ bool is_element_of(Player* x, std::vector<Player*>& v)
     return false;
 }
 
+void Game::draw_table()
+{
+    m_table.draw();
+}
+ 

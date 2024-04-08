@@ -5,12 +5,14 @@
 #include "player.h"
 #include "deck.h"
 #include "misc.h"
+#include "table.h"
 
 
 class Game
 {
     public:
         std::vector<Player>& m_players;
+        Table m_table;
         int m_number_of_players;
         std::vector<Player*> m_folded_players;
         std::vector<Player*> m_all_in_players;
@@ -48,6 +50,7 @@ class Game
         bool all_in_to_call();
         bool all_but_one_players_folded();
         void calculate_valid_options();
+        void draw_table();
         bool all_but_one_players_folded_or_all_in();
         bool all_players_folded_or_all_in();                             
         void execute_inputted_action();

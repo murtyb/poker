@@ -77,7 +77,7 @@ void Pot::find_and_pay_winners_of_pot()
 
 PotArray::PotArray(std::vector<Player*> players)
 {
-    order_players_by_decreasing_stack(players);
+    order_players_by_decreasing_bet(players);
     create_side_pots(players);
 }
 
@@ -91,9 +91,9 @@ void PotArray::create_side_pots(std::vector<Player*>& players)
     }
 }
 
-void PotArray::order_players_by_decreasing_stack(std::vector<Player*>& players)
+void PotArray::order_players_by_decreasing_bet(std::vector<Player*>& players)
 {
-    sort(players.begin(), players.end(), [](Player* p1, Player* p2) {return Player::compare_player_stacks(*p1, *p2);});
+    sort(players.begin(), players.end(), [](Player* p1, Player* p2) {return Player::compare_player_bets(*p1, *p2);});
     std::reverse(players.begin(), players.end());
 }
 

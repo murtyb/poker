@@ -1,5 +1,5 @@
-poker: misc.o cards.o hands.o deck.o player.o pot.o game.o simple_game.o main.o
-	g++ misc.o cards.o hands.o deck.o player.o pot.o game.o simple_game.o main.o -o poker
+poker: misc.o cards.o hands.o deck.o player.o pot.o table.o game.o simple_game.o main.o
+	g++ misc.o cards.o hands.o deck.o player.o pot.o table.o game.o simple_game.o main.o -o poker
 
 misc.o: misc.cpp misc.h
 	g++ -std=c++17 -g -O0 -c misc.cpp
@@ -18,6 +18,9 @@ player.o: player.cpp player.h
 
 pot.o: pot.cpp pot.h
 	g++ -std=c++17 -g -O0 -c pot.cpp
+
+table.o: table.cpp table.h
+	g++ -std=c++17 -g -O0 -c table.cpp
 
 game.o: game.cpp game.h
 	g++ -std=c++17 -g -O0 -c game.cpp

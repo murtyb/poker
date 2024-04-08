@@ -28,6 +28,6 @@ class PotArray
     PotArray(std::vector<Player*> players);
     void find_and_pay_winners();
     void create_side_pots(std::vector<Player*> &players);
-    void order_players_by_decreasing_stack(std::vector<Player*>& players);
+    void order_players_by_decreasing_bet(std::vector<Player*>& players);
     std::vector<Pot> m_side_pots;
 };

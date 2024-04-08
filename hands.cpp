@@ -70,7 +70,7 @@ int Hand::get_low_card_value() const
     return m_low_card_value;        
 }
 
-Card  Hand::get_card(const int& x) const
+Card Hand::get_card(const int& x) const
 {
     if (x == 1)
     {
@@ -87,7 +87,13 @@ Card  Hand::get_card(const int& x) const
     }     
 }
 
+std::string Hand::get_symbols()
+{
+    return m_card_1.get_symbol() + m_card_2.get_symbol();
+}
+
 std::ostream& operator<<(std::ostream& stream, const Hand& hand)
 {
     return stream << hand.get_card(1) << hand.get_card(2);
 }
+

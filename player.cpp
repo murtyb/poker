@@ -2,7 +2,8 @@
 
 
 Player::Player(const float& starting_stack)
-    : m_stack(starting_stack), m_ammount_bet(0)
+    : m_stack(starting_stack), 
+      m_ammount_bet(0.0f)
 {
     s_number_of_players++;
     m_id = s_number_of_players;
@@ -24,9 +25,9 @@ bool Player::compare_player_hands(const Player &p1, const Player &p2)
     return p1.m_hand <= p2.m_hand;
 }
 
-bool Player::compare_player_stacks(const Player &p1, const Player &p2)
+bool Player::compare_player_bets(const Player &p1, const Player &p2)
 {
-    return p1.m_stack <= p2.m_stack;
+    return p1.m_ammount_bet <= p2.m_ammount_bet;
 }
 
 int Player::s_number_of_players = 0; 

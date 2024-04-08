@@ -14,6 +14,7 @@ public:
     Card(const string& card_symbol);
     friend std::ostream& operator<<(std::ostream& stream, const Card& card);
     static void card_initialization();
+    std::string get_symbol() const;
     int get_value() const;
     bool operator<=(const Card& card) const;
 

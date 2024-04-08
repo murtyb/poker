@@ -4,6 +4,8 @@
 #include <vector>
 #include "cards.h"
 
+
+
 class Hand
 {
 public:
@@ -17,6 +19,7 @@ public:
     int get_low_card_value() const;
     Card get_card(const int& x) const;
     friend std::ostream& operator<<(std::ostream& stream, const Hand& hand);
+    std::string get_symbols();
 
 private:
     Card m_card_1;

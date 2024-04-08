@@ -69,6 +69,11 @@ int Card::get_value() const
     return m_card_value;
 }
 
+std::string Card::get_symbol() const
+{
+    return m_card_symbol;
+}
+
 void Card::card_initialization()
 {
     s_face_card_values = {{"J", 11}, {"Q", 12}, {"K", 13}, {"A", 14}};
