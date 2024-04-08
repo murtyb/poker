@@ -124,8 +124,7 @@ void SimpleGame::check_if_limped_to_big_blind()
 
 void SimpleGame::allocate_winnings()
 {
-    std::vector<Player*> temp = pointer_copy(m_players);
-    PotArray SidePots(temp);
+    PotArray SidePots(pointer_copy(m_players));
     SidePots.find_and_pay_winners();
 }
 
@@ -137,7 +136,6 @@ void SimpleGame::end_round()
     for (Player player: m_players)
     {
         player.m_folded = false;
-        player.m_can_go_all_in = true;
     }
     m_deck.reset_deck();
 }

@@ -16,7 +16,6 @@ class Game
         int m_number_of_players;
         std::vector<Player*> m_folded_players;
         std::vector<Player*> m_all_in_players;
-        int m_button_location;
         int m_action_player_location;
         Player* m_action_player = nullptr;
         Player* m_aggressor = nullptr;

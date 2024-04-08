@@ -18,8 +18,7 @@ Game::Game(std::vector<Player>& players, Deck deck, double small_blind = SMALL_B
       m_utg_position(3 % m_number_of_players),
       m_aggressor(nullptr),
       m_action_player(nullptr),
-      m_button_location(0),
-      m_table(Table(pointer_copy(m_players), 30))
+      m_table(Table(pointer_copy(players), TABLE_WIDTH))
 {
 }
 
@@ -161,6 +160,8 @@ void Game::calculate_valid_options()
     m_valid_inputs.push_back(s_input_map["call"]);
     if (all_but_one_players_folded_or_all_in())
     {
+        m_action_player->m_can_go_all_in = false;
+        m_action_player->m_can_raise = false;
         return;
     }
 
