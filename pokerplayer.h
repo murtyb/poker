@@ -11,6 +11,7 @@ class PokerPlayer: public Player
     bool m_can_go_all_in;
     bool m_folded = false;
     bool m_is_all_in = false;
+    bool m_on_button = false;
     float m_ammount_bet;
     double m_stack;
 
@@ -20,5 +21,3 @@ class PokerPlayer: public Player
     static bool compare_player_hands(const PokerPlayer &p1, const PokerPlayer &p2); //returns true if p2's hand beats or draws p1's hand
     static bool compare_player_bets(const PokerPlayer &p1, const PokerPlayer &p2);
 };
-
-std::vector<PokerPlayer*> pointer_copy(std::vector<PokerPlayer>& vect);

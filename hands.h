@@ -1,7 +1,5 @@
 #pragma once
 
-#include <string>
-#include <vector>
 #include "cards.h"
 
 
@@ -10,20 +8,20 @@ class Hand
 {
 public:
     Hand() = default;
-    Hand(const Card& card_1, const Card& card_2);
+    Hand(const std::vector<Card>& cards);
 
     bool operator<=(const Hand& hand) const;
     bool operator==(const Hand& hand) const;
     bool get_is_pocket_pair() const;
     int get_high_card_value() const;
     int get_low_card_value() const;
-    Card get_card(const int& x) const;
+    int size() const;
+    Card get_card(const int &x) const;
     friend std::ostream& operator<<(std::ostream& stream, const Hand& hand);
     std::string get_symbols();
 
 private:
-    Card m_card_1;
-    Card m_card_2;
+    std::vector<Card> m_cards;
     int m_high_card_value;
     int m_low_card_value;
     bool m_is_pocket_pair;

@@ -23,12 +23,10 @@ std::string chips_to_string(float bet, int precision)
 }
 
 Table::Table(std::vector<PokerPlayer*> players, int table_width)
-    :m_top_player(players[0]),
-     m_table_width(table_width),
-     m_vertical_edges_segment(vertical_edges(3))
+    : m_table_width(table_width),
+      m_vertical_edges_segment(vertical_edges(3))
 {
-    set_bottom_player(players);
-    set_side_players(players);
+    update_players(players);
 }
 
 void Table::set_bottom_player(const std::vector<PokerPlayer*>& players)
@@ -83,7 +81,7 @@ void Table::draw_midddle_section(PokerPlayer* left_player, PokerPlayer* right_pl
 void Table::draw_player_line(PokerPlayer* left_player, PokerPlayer* right_player)
 {
     draw_left_player(left_player);
-    draw_bets_and_sides(left_player, right_player);
+    draw_middle_bets_and_sides(left_player, right_player);
     draw_right_player(right_player);
 }
 
@@ -100,12 +98,12 @@ void Table::draw_right_player(PokerPlayer* right_player)
     std::cout << " " << right_player_stats << std::endl;
 }
 
-void Table::draw_bets_and_sides(PokerPlayer* left_player, PokerPlayer* right_player)
+void Table::draw_middle_bets_and_sides(PokerPlayer* left_player, PokerPlayer* right_player)
 {
     std::string right_bet = chips_to_string(right_player->m_ammount_bet, m_precision) + "bb";
     std::string left_bet = chips_to_string(left_player->m_ammount_bet, m_precision) + "bb";
-    std::string middle_spacing = std::string(m_table_width - left_bet.size() - right_bet.size() - 4, ' ');
-    std::cout << "|  " << left_bet << middle_spacing << right_bet << "  |";
+    std::string middle_spacing = std::string(m_table_width - left_bet.size() - right_bet.size() - 8, ' ');
+    std::cout << "|  " << left_bet << " " + button_space(left_player) << middle_spacing << button_space(right_player) + " " << right_bet << "  |";
 }
 
 void Table::draw_top()
@@ -117,10 +115,11 @@ void Table::draw_top()
     std::cout << spacing << m_top_player->m_hand  << '\n'; 
     std::cout << m_left_margin + " " << top_edge_of_table << '\n';
     std::cout << vertical_edges(1);
-    draw_bet_line(m_top_player);
+    draw_end_bet_line(m_top_player);
+    draw_button_line(m_top_player);
 }
 
-void Table::draw_bet_line(PokerPlayer* player)
+void Table::draw_end_bet_line(PokerPlayer* player)
 {
     std::string bet_string;
     if (player == nullptr) {bet_string = "";}
@@ -144,7 +143,8 @@ void Table::draw_bottom()
     
     std::string spacing = std::string(m_table_width / 2, ' ') + m_left_margin;
     std::string bottom_edge_of_table = '|' + std::string(m_table_width, '_') + '|';
-    draw_bet_line(m_bottom_player);
+    draw_button_line(m_bottom_player);
+    draw_end_bet_line(m_bottom_player);
     std::cout << m_left_margin;
     std::cout  << bottom_edge_of_table << '\n';
     std::cout << bottom_player_format(m_bottom_player);   
@@ -160,6 +160,20 @@ std::string Table::bottom_player_format(PokerPlayer* player)
     return bottom_player_details;
 }
 
+void Table::draw_button_line(PokerPlayer* player)
+{
+    if (player == nullptr) {return;}
+    std::string button_line;
+    std::string spacing = std::string(m_table_width / 2 - 1, ' ');
+    std::cout << m_left_margin << "|" << spacing << button_space(player) + " " << spacing << "|" << std::endl;
+}
+
+std::string Table::button_space(PokerPlayer* player)
+{
+    if (player->m_on_button){return "*";}
+    else {return " ";}
+}
+
 void Table::draw()
 {
     draw_top();
@@ -167,3 +181,9 @@ void Table::draw()
     draw_bottom();
 }
 
+void Table::update_players(std::vector<PokerPlayer*> players)
+{
+    m_top_player = players[0];
+    set_bottom_player(players);
+    set_side_players(players);
+}

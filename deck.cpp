@@ -1,10 +1,4 @@
-#include <string>
-#include <stdexcept>
-#include "cards.h"
 #include "deck.h"
-#include "player.h"
-#include "hands.h"
-
 
 
 Deck::Deck(const std::vector<Card>& cards)
@@ -40,11 +34,14 @@ Card& Deck::deal_card()
     return card;
 }
 
-Hand Deck::deal_hand()
+Hand Deck::deal_hand(int size)
 {
-    Card& card_1 = deal_card();
-    Card& card_2 = deal_card();
-    return Hand(card_1, card_2);
+    std::vector<Card> cards;
+    for (int i = 0; i < size; i++)
+    {
+        cards.push_back(deal_card());
+    }
+    return Hand(cards);
 }
 
 void Deck::check_if_deck_empty() const

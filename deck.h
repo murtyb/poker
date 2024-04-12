@@ -1,9 +1,6 @@
 #pragma once
 
-#include <vector>
-#include "cards.h"
 #include "hands.h"
-#include "player.h"
 
 
 class Deck
@@ -12,7 +9,7 @@ class Deck
     Deck(const std::vector<Card>& cards);
     Deck(const std::vector<std::string>& card_symbols);
     Card& deal_card();
-    Hand deal_hand();
+    Hand deal_hand(int size);
     void reset_deck();
 
 private:

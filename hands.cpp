@@ -1,11 +1,8 @@
-#include <string>
-#include <vector>
-#include <stdexcept>
 #include "hands.h"
 
 
-Hand::Hand(const Card& card_1, const Card& card_2)
-    : m_card_1(card_1), m_card_2(card_2)
+Hand::Hand(const std::vector<Card>& cards)
+    : m_cards(cards)
 {
     m_is_pocket_pair = hand_is_pocket_pair();
     set_high_and_low_card_values();
@@ -13,13 +10,13 @@ Hand::Hand(const Card& card_1, const Card& card_2)
 
 bool Hand::hand_is_pocket_pair()
 {
-    return (m_card_1.get_value() == m_card_2.get_value());
+    return (m_cards[1].get_value() == m_cards[2].get_value());
 }
 
 void Hand::set_high_and_low_card_values()
 {
-    int card_1_value = m_card_1.get_value();
-    int card_2_value = m_card_2.get_value();
+    int card_1_value = m_cards[1].get_value();
+    int card_2_value = m_cards[2].get_value();
     if (card_1_value > card_2_value)
     {
         m_high_card_value = card_1_value;
@@ -50,8 +47,10 @@ bool Hand::operator<=(const Hand& hand) const
 
 bool Hand::operator==(const Hand& hand) const
 {
-    if (m_card_1.get_value() != hand.m_card_1.get_value()) {return false;}
-    if (m_card_1.get_value() != hand.m_card_1.get_value()) {return false;}
+    for (int i = 0; i <m_cards.size(); i++)
+    {
+        if (m_cards[i].get_value() != hand.m_cards[i].get_value()) {return false;}
+    }
     return true;
 }
 
@@ -70,30 +69,32 @@ int Hand::get_low_card_value() const
     return m_low_card_value;        
 }
 
+int Hand::size() const
+{
+    return m_cards.size();
+}
+
 Card Hand::get_card(const int& x) const
 {
-    if (x == 1)
-    {
-        return m_card_1;
-    }
-
-    else if (x == 2)
-    {
-        return m_card_2;
-    }   
-    else
-    {
-        throw std::runtime_error("Error when exectuting get_card. Was expecting the integers 1 or 2, however instead recieved: " + std::to_string(x));
-    }     
+    return m_cards[x];
 }
 
 std::string Hand::get_symbols()
 {
-    return m_card_1.get_symbol() + m_card_2.get_symbol();
+    std::string symbols = "";
+    for (Card card: m_cards)
+    {
+        symbols += card.get_symbol();
+    }
+    return symbols;
 }
 
 std::ostream& operator<<(std::ostream& stream, const Hand& hand)
 {
-    return stream << hand.get_card(1) << hand.get_card(2);
+    for (Card card: hand.m_cards)
+    {
+        stream << card;
+    }
+    return stream;
 }
 

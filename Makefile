@@ -1,5 +1,5 @@
-poker: misc.o cards.o hands.o deck.o player.o pokerplayer.o pot.o table.o game.o simple_game.o main.o
-	g++ misc.o cards.o hands.o deck.o player.o pokerplayer.o pot.o table.o game.o simple_game.o main.o -o poker
+poker: misc.o cards.o hands.o deck.o player.o pokerplayer.o pokerplayergroup.o pot.o table.o basegame.o holdemprefloplogic.o holdemui.o preflopgame.o main.o
+	g++ misc.o cards.o hands.o deck.o player.o pokerplayer.o pokerplayergroup.o pot.o table.o basegame.o holdemprefloplogic.o holdemui.o preflopgame.o main.o -o poker
 
 misc.o: misc.cpp misc.h
 	g++ -std=c++17 -g -O0 -c misc.cpp
@@ -19,17 +19,26 @@ player.o: player.cpp player.h
 pokerplayer.o: pokerplayer.cpp pokerplayer.h
 	g++ -std=c++17 -g -O0 -c pokerplayer.cpp
 
+pokerplayergroup.o: pokerplayergroup.cpp pokerplayergroup.h
+	g++ -std=c++17 -g -O0 -c pokerplayergroup.cpp
+
 pot.o: pot.cpp pot.h
 	g++ -std=c++17 -g -O0 -c pot.cpp
 
 table.o: table.cpp table.h
 	g++ -std=c++17 -g -O0 -c table.cpp
 
-game.o: game.cpp game.h
-	g++ -std=c++17 -g -O0 -c game.cpp
+basegame.o: basegame.cpp basegame.h
+	g++ -std=c++17 -g -O0 -c basegame.cpp
 
-simple_game.o: simple_game.cpp simple_game.h
-	g++ -std=c++17 -g -O0 -c simple_game.cpp
+holdemprefloplogic.o: holdemprefloplogic.cpp holdemprefloplogic.h
+	g++ -std=c++17 -g -O0 -c holdemprefloplogic.cpp
+
+holdemui.o: holdemui.cpp holdemui.h
+	g++ -std=c++17 -g -O0 -c holdemui.cpp
+
+preflopgame.o: preflopgame.cpp preflopgame.h
+	g++ -std=c++17 -g -O0 -c preflopgame.cpp
 
 main.o: main.cpp
 	g++ -std=c++17 -g -O0 -c main.cpp

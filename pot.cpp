@@ -67,13 +67,12 @@ void Pot::find_and_pay_winners_of_pot()
     divide_up_chips(winners);
 }
 
-PotArray::PotArray(std::vector<PokerPlayer*> players)
+PotArray::PotArray(PokerPlayerGroup& players)
 {
-    order_players_by_decreasing_bet(players);
-    create_side_pots(players);
+    create_side_pots(players.ordered_by_bet());
 }
 
-void PotArray::create_side_pots(std::vector<PokerPlayer*>& players)
+void PotArray::create_side_pots(std::vector<PokerPlayer*> players)
 {
     m_side_pots.push_back(Pot(players));
     if (players.size() > 1)
@@ -83,11 +82,6 @@ void PotArray::create_side_pots(std::vector<PokerPlayer*>& players)
     }
 }
 
-void PotArray::order_players_by_decreasing_bet(std::vector<PokerPlayer*>& players)
-{
-    sort(players.begin(), players.end(), [](PokerPlayer* p1, PokerPlayer* p2) {return PokerPlayer::compare_player_bets(*p1, *p2);});
-    std::reverse(players.begin(), players.end());
-}
 
 void PotArray::find_and_pay_winners()
 {

@@ -21,13 +21,3 @@ bool PokerPlayer::compare_player_bets(const PokerPlayer &p1, const PokerPlayer &
 {
     return p1.m_ammount_bet <= p2.m_ammount_bet;
 }
-
-std::vector<PokerPlayer*> pointer_copy(std::vector<PokerPlayer>& vect)
-{
-    std::vector<PokerPlayer*> output;
-    for (PokerPlayer& element : vect)
-    {
-        output.push_back(&element);
-    }
-    return output;
-}
