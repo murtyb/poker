@@ -1,4 +1,5 @@
 #include "..\..\include\game_logic\basegame.h"
+#include "basegame.h"
 
 
 BaseGame::BaseGame(PokerPlayerGroup& players, Deck& deck)
@@ -87,4 +88,14 @@ void BaseGame::post_blinds(Chips sb, Chips bb)
     m_players.sb_player()->bet(sb);
     m_players.bb_player()->bet(bb);
     m_highest_bet = bb;
+}
+
+bool BaseGame::one_player_left()
+{
+    return m_players.size() == 1;
+}
+
+void BaseGame::print_winner_message()
+{
+    std::cout << "Player " << m_players.position(0)->m_id << ", you are the winner!!!" << std::endl;
 }

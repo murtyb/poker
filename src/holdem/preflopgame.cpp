@@ -14,6 +14,11 @@ void PreFlopGame::run()
         pre_flop_setup();
         play_pre_flop();
         end_round();
+        if (one_player_left())
+        {
+            print_winner_message();
+            break;
+        }
     }
 }
 

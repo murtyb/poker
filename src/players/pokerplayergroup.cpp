@@ -59,22 +59,21 @@ void PokerPlayerGroup::set_positions()
 
 void PokerPlayerGroup::eliminate_bankrupt_players()
 {
-    for (int i = 0; i < m_position_order.size(); i++)
-    {
-        if (m_position_order[i]->m_stack.m_num_of_chips == 0)
-        {
-            m_position_order.erase(m_position_order.begin() + i);
-        }
-    }
 
-    for (int i = 0; i < m_group_members.size(); i++)
+    for (int i = m_number_of_players - 1; i >= 0; i--)
     {
         if (m_group_members[i].m_stack.m_num_of_chips == 0)
         {
             m_group_members.erase(m_group_members.begin() + i);
         }
+
+        if (m_position_order[i]->m_stack.m_num_of_chips == 0)
+        {
+            m_position_order.erase(m_position_order.begin() + i);
+        }
     }
     m_table.update_players(pointer_copy());
+    m_number_of_players = m_group_members.size();
 }
 
 void PokerPlayerGroup::next_player()

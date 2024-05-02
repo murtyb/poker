@@ -22,6 +22,8 @@ public:
     void fold();
     void deal_hands(int num_of_cards);
     void post_blinds(Chips sb, Chips bb);
+    bool one_player_left();
+    void print_winner_message();
     bool is_valid_raise(Chips amount_raised_to);
     void all_in();
     bool all_in_to_raise();
