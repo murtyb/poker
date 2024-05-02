@@ -98,4 +98,8 @@ bool BaseGame::one_player_left()
 void BaseGame::print_winner_message()
 {
     std::cout << "Player " << m_players.position(0)->m_id << ", you are the winner!!!" << std::endl;
+    std::cout << "Press any key to exit:" << std::endl;
+    std::cin.clear(); // Clear any previous errors
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.get();
 }
