@@ -14,11 +14,12 @@ public:
 
 private:
     std::vector<PokerPlayer*> m_possible_winners;
-    double m_contribution;
-    double m_pot_total;
+    Chips m_contribution;
+    Chips m_pot_total = Chips(0, 'c');
 
 
-    double calculate_contribution();
+    Chips calculate_contribution();
+    void allocate_remaining_chips(std::vector<PokerPlayer*> &winners);
     void divide_up_chips(std::vector<PokerPlayer*> &winners);
     void gather_chips();
     std::vector<PokerPlayer*> find_winners(std::vector<PokerPlayer*>& non_folded_players, const WinRules& win_rules);

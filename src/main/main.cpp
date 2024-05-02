@@ -1,25 +1,21 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <stdexcept>
-#include "..\..\include\cards\cards.h"
-#include "..\..\include\cards\hands.h"
-#include "..\..\include\cards\deck.h"
-#include "..\..\include\holdem\preflopgame.h"
-
-using std::string;
-
-
+#include "..\..\include\holdem\preflopgame.h" 
 
 int main()
 {
     try
     {
         Card::card_initialization();
-        std::vector<string> card_symbols = {"A", "A", "K" ,"10", "10", "9", "9", "7", "J", "Q"};
+        std::vector<string> card_symbols = {"A", "K", "10", "9", "8", "7", "6", "5", "4", "3", "2",
+                                            "A", "K", "10", "9", "8", "7", "6", "5", "4", "3", "2",
+                                            "A", "K", "10", "9", "8", "7", "6", "5", "4", "3", "2",
+                                            "A", "K", "10", "9", "8", "7", "6", "5", "4", "3", "2"};
         Deck deck(card_symbols);
-        std::vector<PokerPlayer> players = {PokerPlayer(100), PokerPlayer(100), PokerPlayer(100)};
-        PreFlopGame Game1(players, deck, 0.5 , 1);
+        deck.shuffle_deck();
+        std::cout << "Please enter the number of players:" << std::endl;
+        int num_of_players;
+        std::cin >> num_of_players;
+        PokerPlayerGroup players(num_of_players);
+        PreFlopGame Game1(players, deck, Chips(0.5, 'b') , Chips(1, 'b'));
         Game1.run();
 
     }

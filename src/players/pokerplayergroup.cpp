@@ -1,5 +1,6 @@
 #include "..\..\include\players\pokerplayergroup.h"
 #include <algorithm>
+#include "pokerplayergroup.h"
 
 #define TABLE_WIDTH 30
 
@@ -9,6 +10,21 @@ PokerPlayerGroup::PokerPlayerGroup(std::vector<PokerPlayer> players)
       m_table(Table(pointer_copy(), TABLE_WIDTH)),
       m_number_of_players(players.size())
 {
+}
+
+PokerPlayerGroup::PokerPlayerGroup(int num_of_players)
+    : PokerPlayerGroup(create_players(num_of_players))
+{
+}
+
+std::vector<PokerPlayer> PokerPlayerGroup::create_players(int num_of_players)
+{
+    std::vector<PokerPlayer> out;
+    for (int i = 0; i < num_of_players; i++)
+    {
+        out.push_back(PokerPlayer(100));
+    }
+    return out;
 }
 
 std::vector<PokerPlayer*> PokerPlayerGroup::pointer_copy()
@@ -45,7 +61,7 @@ void PokerPlayerGroup::eliminate_bankrupt_players()
 {
     for (int i = 0; i < m_position_order.size(); i++)
     {
-        if (m_position_order[i]->m_stack == 0)
+        if (m_position_order[i]->m_stack.m_num_of_chips == 0)
         {
             m_position_order.erase(m_position_order.begin() + i);
         }
@@ -53,7 +69,7 @@ void PokerPlayerGroup::eliminate_bankrupt_players()
 
     for (int i = 0; i < m_group_members.size(); i++)
     {
-        if (m_group_members[i].m_stack == 0)
+        if (m_group_members[i].m_stack.m_num_of_chips == 0)
         {
             m_group_members.erase(m_group_members.begin() + i);
         }

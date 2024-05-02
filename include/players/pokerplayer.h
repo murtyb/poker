@@ -13,11 +13,12 @@ class PokerPlayer: public Player
     bool m_folded = false;
     bool m_is_all_in = false;
     bool m_on_button = false;
-    float m_ammount_bet;
-    double m_stack;
+    Chips m_ammount_bet;
+    Chips m_stack;
 
-    PokerPlayer(const float& starting_stack);
-    void bet(const float& ammount);
+    PokerPlayer(const Chips& starting_stack);
+    PokerPlayer(int starting_stack);
+    void bet(Chips ammount);
 
     static bool compare_player_bets(const PokerPlayer &p1, const PokerPlayer &p2);
 };

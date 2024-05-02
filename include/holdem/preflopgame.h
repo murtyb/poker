@@ -7,7 +7,7 @@
 class PreFlopGame:public HoldEmPreFlopLogic, HoldEmUI 
 {
 public:
-    PreFlopGame(std::vector<PokerPlayer>& players, Deck& deck, double small_blind, double big_blind);
+    PreFlopGame(PokerPlayerGroup& players, Deck& deck, Chips small_blind, Chips big_blind);
     void run();
 
 

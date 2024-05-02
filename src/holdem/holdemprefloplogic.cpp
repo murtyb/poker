@@ -1,7 +1,7 @@
 #include "..\..\include\holdem\holdemprefloplogic.h"
 
 
-HoldEmPreFlopLogic::HoldEmPreFlopLogic(std::vector<PokerPlayer>& players, Deck& deck, double small_blind, double big_blind)
+HoldEmPreFlopLogic::HoldEmPreFlopLogic(PokerPlayerGroup& players, Deck& deck, Chips small_blind, Chips big_blind)
     : m_small_blind(small_blind),
       m_big_blind(big_blind),
       BaseGame(players, deck)
@@ -83,6 +83,7 @@ void HoldEmPreFlopLogic::end_round()
         m_players.position(i)->m_folded = false;
     }
     m_deck.reset_deck();
+    m_deck.shuffle_deck();
 }
 
 

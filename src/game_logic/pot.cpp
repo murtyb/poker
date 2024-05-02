@@ -1,14 +1,14 @@
 #include "..\..\include\game_logic\pot.h"
+#include "pot.h"
 
 Pot::Pot(std::vector<PokerPlayer*> possible_winners)
     : m_possible_winners(possible_winners), 
-      m_contribution(calculate_contribution()), 
-      m_pot_total(0)
+      m_contribution(calculate_contribution())
 {
     gather_chips();
 }
 
-double Pot::calculate_contribution()
+Chips Pot::calculate_contribution()
 {
     PokerPlayer* player_with_smallest_bet = m_possible_winners.back();
     return  player_with_smallest_bet->m_ammount_bet;
@@ -26,10 +26,23 @@ void Pot::gather_chips()
 void Pot::divide_up_chips(std::vector<PokerPlayer*>& winners)
 {
     int num_of_winners = winners.size();
-    double ammount_due = m_pot_total/num_of_winners;
+    Chips ammount_due = m_pot_total/num_of_winners;
     for(PokerPlayer* winner: winners)
     {
+        m_pot_total -= ammount_due;
         winner->m_stack += ammount_due;
+    }
+    allocate_remaining_chips(winners);
+}
+
+void Pot::allocate_remaining_chips(std::vector<PokerPlayer*>& winners)
+{
+    int recipient_position = 0;
+    while(Chips(1, 'c') <= m_pot_total)
+    {
+        m_pot_total -= Chips(1, 'c');
+        winners[recipient_position]->m_stack += Chips(1, 'c');
+        recipient_position = (recipient_position + 1) % winners.size();
     }
 }
 

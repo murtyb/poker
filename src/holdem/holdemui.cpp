@@ -1,17 +1,16 @@
 #include "..\..\include\holdem\holdemui.h"
 
 
-HoldEmUI::HoldEmUI(std::vector<PokerPlayer> &players, Deck& deck)
+HoldEmUI::HoldEmUI(PokerPlayerGroup& players, Deck& deck)
     : BaseGame(players, deck)
 {
 }
 
-std::pair<std::string, double> HoldEmUI::get_user_input()
+std::pair<std::string, Chips> HoldEmUI::get_user_input()
 {
-    std::pair<std::string, int> input;
+    std::pair<std::string, Chips> input;
     std::string& action = input.first;
-    int& desired_raise = input.second;
-    desired_raise = - 1;
+    float desired_raise = -1;
     clear_cin();
     if (!(std::cin >> action))
     {
@@ -29,6 +28,7 @@ std::pair<std::string, double> HoldEmUI::get_user_input()
 
     if (action != "r")
     {
+        input.second = Chips(-1, 'b');
         return input;
     }
 
@@ -39,12 +39,13 @@ std::pair<std::string, double> HoldEmUI::get_user_input()
         return input;
     }
     
-    if (!is_valid_raise(desired_raise))
+    if (!is_valid_raise(Chips(desired_raise, 'b')))
     {
         std::cout << "invalid raise\n";
         input = get_user_input();
         return input;
     }
+    input.second = Chips(desired_raise, 'b');
     return input;
 }
 
@@ -60,11 +61,19 @@ void HoldEmUI::print_options(std::vector<std::string> valid_inputs)
     int option_number = 1;
     for (auto [action, input]: s_input_map)
     {
-        if (is_element_of(input, valid_inputs))
+        if (!is_element_of(input, valid_inputs))
+        {
+            continue;
+        }
+        else if (input == s_input_map["raise"])
+        {
+            std::cout << option_number << ". " << action << '('<< input << " amnt" << ')' << std::endl;
+        }
+        else
         {
             std::cout << option_number << ". " << action << '('<< input << ')' << std::endl;
-            option_number++;
         }
+    option_number++;
     }
 }
 
@@ -84,10 +93,10 @@ bool HoldEmUI::is_valid_action(std::string action)
     return is_element_of(action, valid_inputs());
 }
 
-void HoldEmUI::execute_action(std::pair<std::string, int> input)
+void HoldEmUI::execute_action(std::pair<std::string, Chips> input)
 {
     std::string action = input.first;
-    int ammount_raised = input.second;
+    Chips ammount_raised = input.second;
     if (action == s_input_map["check"])
     {
         return;

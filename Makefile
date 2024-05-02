@@ -18,13 +18,15 @@ DEPS = $(patsubst %.cpp,$(DEP_DIR)/%.d,$(notdir $(SRCS)))
 all: $(PROGNAME)
 
 run: $(PROGNAME)
-	.\$(BIN_DIR)\$(PROGNAME).exe
+	@.\$(BIN_DIR)\$(PROGNAME).exe
 
 $(PROGNAME): $(OBJS)
-	$(LINKER) $(BIN_DIR)/$@ $^ 
+	@echo linking...
+	@$(LINKER) $(BIN_DIR)/$@ $^ 
 
 $(OBJ_DIR)/%.o: $(MAIN_SRC_DIR)/*/%.cpp $(DEP_DIR)/%.d | $(DEP_DIR)
-	$(CXX) $(CXXFLAGS) $< -o $@ $(DEP_FLAGS)
+	@echo compiling $(notdir $<)
+	@$(CXX) $(CXXFLAGS) $< -o $@ $(DEP_FLAGS)
 
 $(DEPS):
 

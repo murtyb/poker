@@ -1,6 +1,6 @@
 #include "..\..\include\holdem\preflopgame.h"
 
-PreFlopGame::PreFlopGame(std::vector<PokerPlayer> &players, Deck &deck, double small_blind, double big_blind)
+PreFlopGame::PreFlopGame(PokerPlayerGroup& players, Deck &deck, Chips small_blind, Chips big_blind)
     : HoldEmPreFlopLogic(players, deck, small_blind, big_blind),
       HoldEmUI(players, deck),
       BaseGame(players, deck)
@@ -24,9 +24,10 @@ void PreFlopGame::play_pre_flop()
         calculate_valid_options();
         m_players.draw_table();
         request_input_message();
-        std::pair<std::string, double> input = get_user_input();
+        std::pair<std::string, Chips> input = get_user_input();
         execute_action(input);
         m_players.next_player();
     }
     allocate_winnings();
+    m_players.eliminate_bankrupt_players();
 }

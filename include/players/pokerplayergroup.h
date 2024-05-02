@@ -10,7 +10,8 @@ class PokerPlayerGroup
     PokerPlayer* m_action_player = nullptr;
 
     PokerPlayerGroup(std::vector<PokerPlayer> players);
-    PokerPlayer* position(int pos);
+    PokerPlayerGroup(int num_of_players);
+    PokerPlayer *position(int pos);
     PokerPlayer* utg_player();
     PokerPlayer* sb_player();
     PokerPlayer* bb_player();
@@ -32,4 +33,5 @@ private:
     void set_positions();
     std::vector<PokerPlayer*> pointer_copy();
 
+    static std::vector<PokerPlayer> create_players(int num_of_players);
 };

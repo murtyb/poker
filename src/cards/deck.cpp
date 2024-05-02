@@ -1,4 +1,5 @@
 #include "..\..\include\cards\deck.h"
+#include "deck.h"
 
 
 Deck::Deck(const std::vector<Card>& cards)
@@ -51,3 +52,11 @@ void Deck::check_if_deck_empty() const
         throw std::runtime_error("Tried to deal card when deck was empty.");
    }
 }
+
+void Deck::shuffle_deck()
+{
+    std::shuffle(m_current_deck.begin(), m_current_deck.end(), eng);
+}
+
+std::random_device Deck::rd;
+std::mt19937 Deck::eng(rd());

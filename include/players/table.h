@@ -4,9 +4,6 @@
 #include <iomanip>
 #include <cmath>
 
-
-std::string chips_to_string(float bet, int precision);
-
 class Table
 {
 public:
