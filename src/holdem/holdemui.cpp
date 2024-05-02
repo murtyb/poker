@@ -96,7 +96,7 @@ bool HoldEmUI::is_valid_action(std::string action)
 void HoldEmUI::execute_action(std::pair<std::string, Chips> input)
 {
     std::string action = input.first;
-    Chips ammount_raised = input.second;
+    Chips amount_raised = input.second;
     if (action == s_input_map["check"])
     {
         return;
@@ -113,7 +113,7 @@ void HoldEmUI::execute_action(std::pair<std::string, Chips> input)
     }
     if (action == s_input_map["raise"])
     {
-        raise(ammount_raised);
+        raise(amount_raised);
         return;
     }
     if (action == s_input_map["all in"])

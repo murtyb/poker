@@ -78,8 +78,8 @@ void Table::draw_right_player(PokerPlayer* right_player)
 
 void Table::draw_middle_bets_and_sides(PokerPlayer* left_player, PokerPlayer* right_player)
 {
-    std::string right_bet = right_player->m_ammount_bet.bb_string();
-    std::string left_bet = left_player->m_ammount_bet.bb_string();
+    std::string right_bet = right_player->m_amount_bet.bb_string();
+    std::string left_bet = left_player->m_amount_bet.bb_string();
     std::string middle_spacing = std::string(m_table_width - left_bet.size() - right_bet.size() - 8, ' ');
     std::cout << "|  " << left_bet << " " + button_space(left_player) << middle_spacing << button_space(right_player) + " " << right_bet << "  |";
 }
@@ -101,7 +101,7 @@ void Table::draw_end_bet_line(PokerPlayer* player)
 {
     std::string bet_string;
     if (player == nullptr) {bet_string = "";}
-    else {bet_string = player->m_ammount_bet.bb_string();}
+    else {bet_string = player->m_amount_bet.bb_string();}
     std::string left_spacing = std::string(m_table_width / 2 - 1, ' ');
     int right_spacing_size = m_table_width/2 - bet_string.size() + 1;
     std::string right_spacing = std::string(right_spacing_size, ' ');

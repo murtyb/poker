@@ -10,7 +10,7 @@ HoldEmPreFlopLogic::HoldEmPreFlopLogic(PokerPlayerGroup& players, Deck& deck, Ch
 
 void HoldEmPreFlopLogic::calculate_valid_options()
 {
-    if (m_action_player->m_ammount_bet == m_highest_bet)
+    if (m_action_player->m_amount_bet == m_highest_bet)
     {
         m_action_player->m_can_check = true;
     }

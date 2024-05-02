@@ -9,13 +9,13 @@ PokerPlayer::PokerPlayer(const Chips& starting_stack)
 
 PokerPlayer::PokerPlayer(int starting_stack) : PokerPlayer(Chips(starting_stack, 'b')){}
 
-void PokerPlayer::bet(Chips ammount)
+void PokerPlayer::bet(Chips amount)
 {
-    m_stack -= ammount;
-    m_ammount_bet += ammount;
+    m_stack -= amount;
+    m_amount_bet += amount;
 }
 
 bool PokerPlayer::compare_player_bets(const PokerPlayer &p1, const PokerPlayer &p2)
 {
-    return p1.m_ammount_bet <= p2.m_ammount_bet;
+    return p1.m_amount_bet <= p2.m_amount_bet;
 }

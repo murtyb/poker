@@ -11,14 +11,14 @@ Pot::Pot(std::vector<PokerPlayer*> possible_winners)
 Chips Pot::calculate_contribution()
 {
     PokerPlayer* player_with_smallest_bet = m_possible_winners.back();
-    return  player_with_smallest_bet->m_ammount_bet;
+    return  player_with_smallest_bet->m_amount_bet;
 }
 
 void Pot::gather_chips()
 {
     for (PokerPlayer* player: m_possible_winners)
     {
-        player->m_ammount_bet -= m_contribution;
+        player->m_amount_bet -= m_contribution;
         m_pot_total += m_contribution;
     }
 }
@@ -26,11 +26,11 @@ void Pot::gather_chips()
 void Pot::divide_up_chips(std::vector<PokerPlayer*>& winners)
 {
     int num_of_winners = winners.size();
-    Chips ammount_due = m_pot_total/num_of_winners;
+    Chips amount_due = m_pot_total/num_of_winners;
     for(PokerPlayer* winner: winners)
     {
-        m_pot_total -= ammount_due;
-        winner->m_stack += ammount_due;
+        m_pot_total -= amount_due;
+        winner->m_stack += amount_due;
     }
     allocate_remaining_chips(winners);
 }

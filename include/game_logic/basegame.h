@@ -17,12 +17,12 @@ public:
     Chips m_highest_bet;
 
     BaseGame(PokerPlayerGroup& players, Deck& deck);
-    void raise(Chips ammount);
+    void raise(Chips amount);
     void call();
     void fold();
     void deal_hands(int num_of_cards);
     void post_blinds(Chips sb, Chips bb);
-    bool is_valid_raise(Chips ammount_raised_to);
+    bool is_valid_raise(Chips amount_raised_to);
     void all_in();
     bool all_in_to_raise();
     bool all_in_to_call();
